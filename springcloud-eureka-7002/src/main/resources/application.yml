@@ -1,0 +1,20 @@
+server:
+  port: 7002
+
+
+#Eureka配置
+eureka:
+  instance:
+    hostname: eureka7002.com #Eureka服务端的实例名称
+  client:
+    registerWithEureka: false  #表示是否向eureka注册中心注册自己
+    fetchRegistry: false    #表示fetch-registry如果为false,表示自己为注册中心
+    service-url:   #监控页面~
+      defaultZone: http://root:root@eureka7001.com:7001/eureka/,http://root:root@eureka7003.com:7003/eureka/
+#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+#修改下security的默认账号密码
+spring:
+  security:
+    user:
+      name: root
+      password: root

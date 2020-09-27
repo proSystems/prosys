@@ -1,0 +1,5 @@
+com\meng\springcloud\DeptConsumer_feign.class
+com\meng\springcloud\config\ConfigBean.class
+com\meng\springcloud\service\DeptClientService.class
+com\meng\springcloud\controller\DeptConsumerController.class
+com\meng\springcloud\pojo\Dept.class
