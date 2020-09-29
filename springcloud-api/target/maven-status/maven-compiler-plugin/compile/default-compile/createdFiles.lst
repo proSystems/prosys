@@ -1,0 +1,5 @@
+com\you\springcloud\pojo\Project.class
+com\you\springcloud\api.class
+com\you\springcloud\pojo\JwtUtil.class
+com\you\springcloud\service\DeptClientService.class
+com\you\springcloud\pojo\Dto.class

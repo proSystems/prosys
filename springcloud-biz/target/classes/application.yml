@@ -1,0 +1,17 @@
+server:
+  port: 9527
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: true
+    service-url:
+      defaultZone: http://root:root@localhost:7001/eureka/
+#      defaultZone: http://root:root@eureka7001.com:7001/eureka,http://root:root@eureka7002.com:7002/eureka,http://root:root@eureka7003.com:7003/eureka
+instance:
+  prefer-ip-address: true
+zuul:
+  routes:
+    SPRINGCLOUD-PROVIDER-DEPT:
+      path: /you/**
+      serviceId: SPRINGCLOUD-PROVIDER-DEPT

@@ -7,7 +7,7 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://root:root@localhost:7001/eureka/
-#      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+#      defaultZone: http://root:root@eureka7001.com:7001/eureka,http://root:root@eureka7002.com:7002/eureka,http://root:root@eureka7003.com:7003/eureka
 instance:
   prefer-ip-address: true
 zuul:

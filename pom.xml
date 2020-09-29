@@ -7,14 +7,17 @@
     <groupId>org.example</groupId>
     <artifactId>pro-sys</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>springCloud</name>
-	<modules>
+    <modules>
         <module>springcloud-eureka-7001</module>
         <module>springcloud-eureka-7002</module>
         <module>7003</module>
         <module>springcloud-provider-dept-8001</module>
         <module>springcloud-consumer-dept-feign</module>
+        <module>springcloud-biz</module>
+        <module>springcloud-api</module>
     </modules>
+    <name>pro-sys</name>
+
     <packaging>pom</packaging>
 
     <properties>

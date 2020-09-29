@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>项目系统</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+
+    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">项目系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="home.html">首页</a></li>
+            <li class="layui-nav-item"><a href="organization.html">组织</a></li>
+            <li class="layui-nav-item"><a href="project.html">项目</a></li>
+            <li class="layui-nav-item"><a href="wages.html">工资</a></li>
+            <li class="layui-nav-item"><a href="personnel.html">人员</a></li>
+            <li class="layui-nav-item"><a href="finance.html">财务</a></li>
+            <li class="layui-nav-item"><a href="attendance.html">考勤</a></li>
+            <li class="layui-nav-item"><a href="jurisdiction.html">权限</a></li>
+            <li class="layui-nav-item"><a href="itemdesign.html">项设</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;" class=""layui-inline>
+
+           
+            <div id="grace" class="layui-input-inline">
+                
+            </div>
+            
+        </div>
+
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="layui/layui.js"></script>
+<script src="js/jquery-3.4.1.min.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+    $(document).ready(function(){
+        load();
+    })
+  
+    function load(){
+            $.ajax({
+                type:"GET",
+                url:"/you/pro/getAllP",
+                dataType:"json",
+                success:function (data) {
+                    $("#grace").html("");
+                    var STR = "";
+                    for(var i =0;i<data.length;i++){
+                        switch(data[i].status){
+                            case 0:
+                            var sta = "未启动";
+                            break;
+                            case 1:
+                            var sta = "进行中";
+                            break;
+                            case 2:
+                            var sta = "验收";
+                            break;
+                        }
+                        STR += "<div style='height: 200px;width: 200px;padding: 10px;margin:20px;border:1px solid blue' class='layui-input-inline'>";
+                        STR += "<strong>项目名称："+data[i].name+"</strong><br/><hr>";
+                        STR += "在场人数："+data[i].personNum+"人<br/><br/>";
+                        STR += "项目状态："+sta+"<br/><br/>";
+                        STR += data[i].description+"</div>";                       
+                    }
+                    STR += "<div style='height: 200px;width: 200px;padding: 10px;margin:20px;border:1px solid blue' class='layui-input-inline'><img src='layui/images/add.png' width='200' height='200'></div>";
+                    $("#grace").html(STR);
+                }
+            })
+       
+        }
+ 
+</script>
+
+</body>
+</html>

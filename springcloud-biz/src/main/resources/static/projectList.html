@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>项目列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
+</head>
+<body>
+
+<div style="padding: 15px;">
+
+
+    <h2>项目列表</h2>
+    <br>
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">单位编号：</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="id"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">单位名称：</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="companyName"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-inline">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="tijiao">查 询</button>
+                <button type="button" class="layui-btn" id="add">增加</button>
+            </div>
+
+        </div>
+    </form>
+
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+
+</div>
+
+<script src="layui/layui.js" charset="utf-8"></script>
+
+<script>
+    var pageCurr;
+    var form;
+    layui.use('table', function(){
+        var table = layui.table;
+        form = layui.form;
+        tableIns=table.render({
+            elem: '#test'
+            ,url:'/you/pro/getAllP1'
+            ,toolbar: '#toolbarDemo'
+            ,cellMinWidth: 80
+            ,cols: [[
+                 {field:'id', width:80, title: 'ID', sort: true}
+                ,{field:'code', width:200, title: '编码'}
+                ,{field:'name', width:200, title: '名称'}
+                ,{field:'region', title: '年级', width: 200, minWidth: 100}
+                ,{field:'company', width:200, title: '价格'}
+                ,{field:'personNum', width:200, title: '学习中人数'}
+                ,{fixed: 'right', width:200, align:'center',title: '操作', toolbar: '#barDemo'}
+            ]]
+            ,page:true
+            ,request:{
+                pageName:'start',
+                limitName:'size'
+            }
+            ,response:{
+                statusName:'code',
+                statusCode:0,
+                countName:'count',
+                dataName:'data'
+            }
+            ,limits:[3,5,10]
+            ,limit:2
+            ,page:1
+            ,cellMinWidth: 20
+            ,done: function(res, curr, count){
+                pageCurr=curr;
+            }
+            ,method:"get"
+        });
+        //监听搜索框
+        form.on('submit(searchSubmit)', function(data){
+            //重新加载table
+            load(data);
+            return false;
+        });
+        function load(obj){
+            //重新加载table
+            tableIns.reload({
+                where: obj.field
+                , page: {
+                    curr: pageCurr //从当前页码开始
+                }
+            });
+        }
+        table.on('tool()', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var $ = layui.jquery;
+            var data = obj.data //获得当前行数据
+                ,layEvent = obj.event; //获得 lay-event 对应的值
+            if(layEvent === 'edit'){
+                $.ajax({
+                    type:"GET",
+                    url:"/consumeLesson",
+                    data:{id:data.id},
+                    dataType:"json",
+                    success:function (data) {
+                        alert("操作成功!");
+                    }
+                })
+            }
+        });
+        table.on('toolbar()', function(obj){
+            var $ = layui.jquery;
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    var ids = new Array();
+                    for(var i=0;i<data.length;i++){
+                        ids.push(data[i].id);
+                    }
+                    $.ajax({
+                        method:"POST",
+                        url:"/consumeBatch",
+                        data:{ids:ids.join(",")},
+                        success:function (data) {
+                            alert("操作成功!");
+                        }
+                    })
+                    break;
+            };
+        });
+    });
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="delete">删除</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="update">编辑</a>
+</script>
+
+</body>
+</html>
